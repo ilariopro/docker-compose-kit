@@ -1,0 +1,13 @@
+services:
+  rabbitmq:
+    container_name: ${PROJECT_NAME}_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    image: rabbitmq:${RABBITMQ_VERSION}-management
+    ports:
+      - ${RABBITMQ_PORT}:5672
+      - ${RABBITMQ_UI_PORT}:15672
+    restart: on-failure
+    volumes:
+      - ${PWD}/data/rabbitmq:/var/lib/rabbitmq:Z

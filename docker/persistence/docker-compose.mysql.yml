@@ -1,0 +1,15 @@
+services:
+  mysql:
+    command: --character-set-server=${MYSQL_CHARSET} --collation-server=${MYSQL_COLLATION}
+    container_name: ${PROJECT_NAME}_mysql
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+    image: mysql:${MYSQL_VERSION}
+    ports:
+      - ${MYSQL_PORT}:3306
+    restart: on-failure
+    volumes:
+      - ${PWD}/data/mysql:/var/lib/mysql:Z

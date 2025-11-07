@@ -1,0 +1,10 @@
+# This service provides a Mailpit container.
+# It can be used as a local SMTP server for testing email sending.
+
+services:
+  mailpit:
+    container_name: ${PROJECT_NAME}_mailpit
+    image: axllent/mailpit:${MAILPIT_VERSION}
+    ports:
+      - ${MAILPIT_PORT}:8025
+    restart: on-failure

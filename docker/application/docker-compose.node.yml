@@ -1,0 +1,16 @@
+services:
+  node:
+    build:
+      context: ${PWD}/docker/application
+      dockerfile: Dockerfile.node
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+    container_name: ${PROJECT_NAME}_node
+    env_file:
+      - ${PWD}/.env
+    image: node:${NODE_VERSION}
+    ports:
+      - ${NODE_PORT}:3000
+    restart: on-failure
+    volumes:
+      - ${PWD}/app/node:/usr/src/app:Z

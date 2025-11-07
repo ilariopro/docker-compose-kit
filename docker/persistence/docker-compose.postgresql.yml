@@ -1,0 +1,14 @@
+services:
+  postgresql:
+    container_name: ${PROJECT_NAME}_postgresql
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_INITDB_ARGS: --encoding=${POSTGRES_CHARSET} --lc-collate=${POSTGRES_COLLATION}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    image: postgres:${POSTGRES_VERSION}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    restart: on-failure
+    volumes:
+      - ${PWD}/data/postgresql:/var/lib/postgresql/data:Z

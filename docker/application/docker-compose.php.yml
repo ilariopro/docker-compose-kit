@@ -1,0 +1,18 @@
+services:
+    php:
+        build:
+            context: ${PWD}/docker/application
+            dockerfile: Dockerfile.php
+            args:
+                PHP_VERSION: ${PHP_VERSION}
+        container_name: ${PROJECT_NAME}_php
+        env_file:
+            - ${PWD}/.env
+        environment:
+            COMPOSER_ROOT_VERSION: ${COMPOSER_ROOT_VERSION:-1.0.0}
+        image: php:${PHP_VERSION}
+        ports:
+            - ${PHP_PORT}:9000
+        restart: on-failure
+        volumes:
+            - ${PWD}/app/php:/usr/src/app:Z

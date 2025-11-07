@@ -1,0 +1,19 @@
+# This service provides a minimal Nginx container.
+# It can be used as a reverse proxy or to serve static/frontend content.
+
+services:
+  nginx:
+    build:
+      context: ${PWD}/docker/infrastructure
+      dockerfile: Dockerfile.nginx
+      args:
+        NGINX_VERSION: ${NGINX_VERSION}
+    container_name: ${PROJECT_NAME}_nginx
+    env_file:
+      - ${PWD}/.env
+    image: nginx:${NGINX_VERSION}
+    ports:
+      - "${NGINX_PORT}:80"
+    restart: on-failure
+    volumes:
+      - ${PWD}/app:/var/www/html:Z

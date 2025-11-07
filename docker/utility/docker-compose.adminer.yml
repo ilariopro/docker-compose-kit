@@ -1,0 +1,12 @@
+# This service provides an Adminer container.
+# It can be used to manage databases via a web interface.
+
+services:
+  adminer:
+    container_name: ${PROJECT_NAME}_adminer
+    environment:
+      ADMINER_DESIGN: ${ADMINER_DESIGN}
+    image: adminer:${ADMINER_VERSION}
+    ports:
+      - ${ADMINER_PORT}:8080
+    restart: on-failure

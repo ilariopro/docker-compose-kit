@@ -1,0 +1,9 @@
+services:
+  redis:
+    container_name: ${PROJECT_NAME}_redis
+    image: redis:${REDIS_VERSION}
+    ports:
+      - ${REDIS_PORT}:6379
+    restart: on-failure
+    volumes:
+      - ${PWD}/data/redis:/data:Z

@@ -1,0 +1,7 @@
+ARG NODE_VERSION=latest
+
+FROM node:${NODE_VERSION}-slim
+
+WORKDIR /usr/src/app
+
+CMD ["npm", "start"]
