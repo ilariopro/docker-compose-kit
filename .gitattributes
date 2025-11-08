@@ -1,0 +1,15 @@
+# --- Linguist configuration for GitHub language stats ---
+
+# Count YAML and Dockerfiles as code
+*.yml linguist-language=YAML
+*.yaml linguist-language=YAML
+Dockerfile* linguist-language=Dockerfile
+
+# Mark documentation as non-code
+README.md linguist-documentation
+CONTRIBUTING.md linguist-documentation
+LICENSE linguist-documentation
+
+# Exclude non-source content (examples, assets, docs)
+example/* linguist-vendored
+docs/* linguist-vendored
