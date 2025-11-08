@@ -1,13 +1,20 @@
+# Service: RabbitMQ
+#
+# This service provides a RabbitMQ container for message brokering between microservices.
+# The management UI is exposed for monitoring queues and exchanges.
+#
+# See https://hub.docker.com/_/rabbitmq
+
 services:
   rabbitmq:
     container_name: ${PROJECT_NAME}_rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
-    image: rabbitmq:${RABBITMQ_VERSION}-management
+    image: rabbitmq:${RABBITMQ_VERSION:-latest}-management
     ports:
-      - ${RABBITMQ_PORT}:5672
-      - ${RABBITMQ_UI_PORT}:15672
+      - ${RABBITMQ_PORT:-5672}:5672
+      - ${RABBITMQ_UI_PORT:-15672}:15672
     restart: on-failure
     volumes:
       - ${PWD}/data/rabbitmq:/var/lib/rabbitmq:Z

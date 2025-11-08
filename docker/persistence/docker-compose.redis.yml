@@ -1,9 +1,16 @@
+# Service: Redis
+#
+# This service provides a Redis container for caching, session storage, or message brokering.
+# It is lightweight and often used alongside databases for performance optimization.
+#
+# See https://hub.docker.com/_/redis
+
 services:
   redis:
     container_name: ${PROJECT_NAME}_redis
-    image: redis:${REDIS_VERSION}
+    image: redis:${REDIS_VERSION:-latest}
     ports:
-      - ${REDIS_PORT}:6379
+      - ${REDIS_PORT:-6379}:6379
     restart: on-failure
     volumes:
       - ${PWD}/data/redis:/data:Z

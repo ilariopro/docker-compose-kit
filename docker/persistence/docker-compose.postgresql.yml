@@ -1,14 +1,21 @@
+# Service: PostgreSQL
+#
+# This service provides a PostgreSQL container for relational database storage.
+# Charset and collation settings can be customized via environment variables.
+#
+# See https://hub.docker.com/_/postgres
+
 services:
   postgresql:
     container_name: ${PROJECT_NAME}_postgresql
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_INITDB_ARGS: --encoding=${POSTGRES_CHARSET} --lc-collate=${POSTGRES_COLLATION}
+      POSTGRES_INITDB_ARGS: --encoding=${POSTGRES_CHARSET:-UTF8} --lc-collate=${POSTGRES_COLLATION:-en_US.UTF-8}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    image: postgres:${POSTGRES_VERSION}
+    image: postgres:${POSTGRES_VERSION:-latest}
     ports:
-      - ${POSTGRES_PORT}:5432
+      - ${POSTGRES_PORT:-5432}:5432
     restart: on-failure
     volumes:
       - ${PWD}/data/postgresql:/var/lib/postgresql/data:Z

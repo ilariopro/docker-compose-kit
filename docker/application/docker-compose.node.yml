@@ -1,16 +1,23 @@
+# Service: Node.js
+#
+# This service provides a Node.js container for frontend or backend JavaScript applications.
+# It can be used for frameworks like Vue.js, React, or backend microservices.
+#
+# See https://hub.docker.com/_/node
+
 services:
   node:
     build:
       context: ${PWD}/docker/application
       dockerfile: Dockerfile.node
       args:
-        NODE_VERSION: ${NODE_VERSION}
+        NODE_VERSION: ${NODE_VERSION:-latest}
     container_name: ${PROJECT_NAME}_node
     env_file:
       - ${PWD}/.env
-    image: node:${NODE_VERSION}
+    image: node:${NODE_VERSION:-latest}
     ports:
-      - ${NODE_PORT}:3000
+      - ${NODE_PORT:-3000}:3000
     restart: on-failure
     volumes:
       - ${PWD}/app/node:/usr/src/app:Z

@@ -1,10 +1,14 @@
-# This service provides a Mailpit container.
-# It can be used as a local SMTP server for testing email sending.
+# Service: Mailpit
+#
+# This service provides a Mailpit container for capturing and testing outgoing emails.
+# It offers a web UI to view messages sent from local applications during development.
+#
+# See https://hub.docker.com/r/axllent/mailpit
 
 services:
   mailpit:
     container_name: ${PROJECT_NAME}_mailpit
-    image: axllent/mailpit:${MAILPIT_VERSION}
+    image: axllent/mailpit:${MAILPIT_VERSION:-latest}
     ports:
-      - ${MAILPIT_PORT}:8025
+      - ${MAILPIT_PORT:-8025}:8025
     restart: on-failure

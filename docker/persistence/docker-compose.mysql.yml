@@ -1,15 +1,22 @@
+# Service: MySQL
+#
+# This service provides a MySQL container for relational database storage.
+# The charset and collation can be customized through environment variables.
+#
+# See https://hub.docker.com/_/mysql
+
 services:
   mysql:
-    command: --character-set-server=${MYSQL_CHARSET} --collation-server=${MYSQL_COLLATION}
+    command: --character-set-server=${MYSQL_CHARSET:-utf8mb4} --collation-server=${MYSQL_COLLATION:-utf8mb4_unicode_ci}
     container_name: ${PROJECT_NAME}_mysql
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
-    image: mysql:${MYSQL_VERSION}
+    image: mysql:${MYSQL_VERSION:-latest}
     ports:
-      - ${MYSQL_PORT}:3306
+      - ${MYSQL_PORT:-3306}:3306
     restart: on-failure
     volumes:
       - ${PWD}/data/mysql:/var/lib/mysql:Z
