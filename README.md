@@ -1,5 +1,7 @@
 # Docker Compose Kit
 
+> ⚠️ This project is in an early development stage. Features and configurations may change. Feedback and contributions are welcome!
+
 A modular **Docker Compose toolkit** for quickly building **dockerized environments**.
 
 Use this project as a starting point to create, extend, and customize Docker Compose setups for PHP, Node.js, Python, databases, web servers, and common development tools.
