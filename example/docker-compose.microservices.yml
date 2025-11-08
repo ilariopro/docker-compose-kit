@@ -1,0 +1,81 @@
+# Example: Microservices architecture setup
+#
+# This configuration demonstrates a distributed architecture based on multiple
+# backend and frontend services communicating through a common reverse proxy.
+#
+# - Backend: Two Node.js services (User and Notification)
+# - Frontend: A Node.js frontend (e.g., Vue or React)
+# - Reverse Proxy: Nginx routes external traffic to each service
+# - Message Broker: RabbitMQ for inter-service communication
+# - Cache: Redis for session and caching layer
+# - Database: PostgreSQL for persistent data storage
+# - Tools: Adminer for database management
+
+name: microservices_example
+
+include:
+  - ../docker/persistence/docker-compose.postgresql.yml
+  - ../docker/persistence/docker-compose.redis.yml
+  - ../docker/persistence/docker-compose.rabbitmq.yml
+
+  - ../docker/utility/docker-compose.adminer.yml
+
+services:
+  user_service:
+    depends_on:
+      - postgresql
+      - rabbitmq
+    environment:
+      - NODE_ENV=development
+      - SERVICE_NAME=user-service
+    extends:
+      file: ../docker/application/docker-compose.node.yml
+      service: node
+    volumes:
+      - ${PWD}/app/user-service:/usr/src/app:Z
+    ports:
+      - 3001:3000
+
+  notification_service:
+    depends_on:
+      - rabbitmq
+      - redis
+    environment:
+      - NODE_ENV=development
+      - SERVICE_NAME=notification-service
+    extends:
+      file: ../docker/application/docker-compose.node.yml
+      service: node
+    volumes:
+      - ${PWD}/app/notification-service:/usr/src/app:Z
+    ports:
+      - 3002:3000
+
+  frontend:
+    environment:
+      - NODE_ENV=development
+      - SERVICE_NAME=frontend
+    extends:
+      file: ../docker/application/docker-compose.node.yml
+      service: node
+    volumes:
+      - ${PWD}/app/frontend:/usr/src/app:Z
+    ports:
+      - 5173:5173
+
+  nginx:
+    depends_on:
+      - user_service
+      - notification_service
+      - frontend
+    extends:
+      file: ../docker/infrastructure/docker-compose.nginx.yml
+      service: nginx
+    volumes:
+      - ${PWD}/config/nginx/microservices.conf:/etc/nginx/nginx.conf:Z # Custom configuration example
+    ports:
+      - 8080:80
+
+networks:
+  default:
+    driver: bridge

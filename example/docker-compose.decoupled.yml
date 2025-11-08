@@ -1,0 +1,61 @@
+# Example: Decoupled frontend and backend setup
+#
+# This configuration demonstrates a fully decoupled architecture
+# where the frontend and backend run in separate containers.
+#
+# - Database: MySQL container for backend persistence
+# - Backend: PHP application connected to MySQL
+# - Frontend: Vue.js served via Node.js
+# - Nginx acts as a reverse proxy serving both frontend and backend
+# - Tools: Adminer for database management, Mailpit for email testing
+
+name: decoupled_example
+
+include:
+  - ../docker/persistence/docker-compose.mysql.yml
+
+  - ../docker/utility/docker-compose.adminer.yml
+  - ../docker/utility/docker-compose.mailpit.yml
+
+services:
+  backend:
+    depends_on:
+      - mysql
+    environment:
+      - APP_ENV=local
+      - SERVICE_NAME=backend
+    extends:
+      file: ../docker/application/docker-compose.php.yml
+      service: php
+    volumes:
+      - ${PWD}/app/backend:/usr/src/app:Z
+
+  frontend:
+    environment:
+      - NODE_ENV=development
+      - SERVICE_NAME=frontend
+    extends:
+      file: ../docker/application/docker-compose.node.yml
+      service: node
+    volumes:
+      - ${PWD}/app/frontend:/usr/src/app:Z
+    ports:
+      - 5173:5173
+
+  nginx:
+    depends_on:
+      - backend
+      - frontend
+    extends:
+      file: ../docker/infrastructure/docker-compose.nginx.yml
+      service: nginx
+    volumes:
+      - ${PWD}/app/frontend/dist:/usr/share/nginx/html:Z
+      - ${PWD}/app/backend:/var/www/html:Z
+      - ${PWD}/config/nginx/nginx.conf:/etc/nginx/nginx.conf:Z # Custom configuration example
+    ports:
+      - 8080:80
+
+networks:
+  default:
+    driver: bridge

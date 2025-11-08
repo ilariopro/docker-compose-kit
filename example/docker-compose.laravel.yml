@@ -1,0 +1,42 @@
+# Example: Laravel / MVC setup
+#
+# This configuration demonstrates a minimal MVC architecture
+# using PHP as the backend, Apache as the web server, and MySQL for persistence.
+#
+# - Database: MySQL container for backend persistence
+# - Backend: PHP application running Laravel (MVC application)
+# - Web server: Apache serving the PHP application
+# - Tools: Adminer for database management, Mailpit for email testing
+
+name: laravel_example
+
+include:
+  - ../docker/persistence/docker-compose.mysql.yml
+
+  - ../docker/utility/docker-compose.adminer.yml
+  - ../docker/utility/docker-compose.mailpit.yml
+
+services:
+  php:
+    depends_on:
+      - mysql
+    environment:
+      - APP_ENV=local
+    extends:
+      file: ../docker/application/docker-compose.php.yml
+      service: php
+    volumes:
+      - ${PWD}/app:/usr/src/app:Z
+
+  apache:
+    depends_on:
+      - php
+    extends:
+      file: ../docker/infrastructure/docker-compose.apache.yml
+      service: apache
+    volumes:
+      - ${PWD}/app:/var/www/html:Z
+
+networks:
+  default:
+    driver: bridge
