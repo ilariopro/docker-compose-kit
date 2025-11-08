@@ -1,0 +1,44 @@
+# Docker Compose Kit
+#
+# Author: Ilario Promutico
+# License: MIT
+# Repository: https://github.com/ilariopro/docker-compose-kit
+# Version: 0.1.0
+#
+# A modular Docker Compose toolkit for quickly building dockerized environments.
+# Use this root docker-compose file as your main entry point: selectively
+# include or extend the service groups you need for your project.
+
+name: docker-compose-kit
+
+# Uncomment or include the desired service groups as needed.
+include:
+    # - ./docker/application/docker-compose.php.yml
+    # - ./docker/application/docker-compose.node.yml
+
+    # - ./docker/infrastructure/docker-compose.apache.yml
+    # - ./docker/infrastructure/docker-compose.nginx.yml
+
+    - ./docker/persistence/docker-compose.mysql.yml
+    # - ./docker/persistence/docker-compose.postgresql.yml
+    # - ./docker/persistence/docker-compose.redis.yml
+    # - ./docker/persistence/docker-compose.rabbitmq.yml
+
+    - ./docker/utility/docker-compose.adminer.yml
+    # - ./docker/utility/docker-compose.mailpit.yml
+
+    # - ./example/docker-compose.laravel.yml
+    # - ./example/docker-compose.decoupled.yml
+    # - ./example/docker-compose.microservices.yml
+
+# Project-specific services and overrides can be defined here if needed.
+# services:
+#     example:
+#         container_name: ${PROJECT_NAME}_example
+#         image: hello-world
+
+# Shared default network used across all services.
+networks:
+    default:
+        driver: bridge
+        name: ${PROJECT_NAME}_network
