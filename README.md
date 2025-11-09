@@ -1,6 +1,6 @@
 # Docker Compose Kit
 
-> ⚠️ This project is in an early development stage. Features and configurations may change. Feedback and contributions are welcome!
+> ⚠️ This project is in an early development stage. Configurations may change. Feedback and contributions are welcome!
 
 A modular **Docker Compose toolkit** for quickly building **dockerized environments**.
 
