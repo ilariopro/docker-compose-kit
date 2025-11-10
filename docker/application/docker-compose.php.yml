@@ -22,4 +22,4 @@ services:
             - ${PHP_PORT:-9000}:9000
         restart: on-failure
         volumes:
-            - ${PWD}/app/php:/usr/src/app:Z
+            - ${PWD}/app/php:/var/www/html:Z

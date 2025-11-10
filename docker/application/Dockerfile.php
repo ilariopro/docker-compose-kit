@@ -18,6 +18,6 @@ RUN apt-get update && apt-get install -y \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-WORKDIR /usr/src/app
+WORKDIR /var/www/html
 
 CMD ["php-fpm", "-F"]

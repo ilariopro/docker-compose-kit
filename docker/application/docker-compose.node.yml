@@ -20,4 +20,4 @@ services:
       - ${NODE_PORT:-3000}:3000
     restart: on-failure
     volumes:
-      - ${PWD}/app/node:/usr/src/app:Z
+      - ${PWD}/app/node:/var/www/html:Z
