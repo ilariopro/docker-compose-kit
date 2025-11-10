@@ -10,9 +10,9 @@ Use this project as a starting point to create, extend, and customize Docker Com
 
 - Modular architecture with consistent structure and naming convention: **Application**, **Infrastructure**, **Persistence**, and **Utility** layers. 
 - Ready-to-use service definitions for PHP, Node.js, MySQL, PostgreSQL, Redis, RabbitMQ, Apache, Nginx, Adminer, Mailpit, and more.
-- Example configuration for Laravel, decoupled frontend-backend, and microservices architectures.
+- Example configuration for **MVC**, **decoupled frontend-backend**, and **microservices architectures**.
 - Predefined shared network for easy inter-service communication.
-- Minimal images by design; volumes allow mounting local code for rapid development and customization.
+- Minimal images by design; volumes allow mounting local code for **rapid development** and **customization**.
 
 ## Requirements
 
@@ -47,7 +47,7 @@ Open the root `docker-compose.yml`. Uncomment or add the service groups and exam
 include:
   - ./docker/persistence/docker-compose.mysql.yml
   - ./docker/utility/docker-compose.adminer.yml
-  - ./example/docker-compose.laravel.yml
+  - ./example/docker-compose.mvc.yml
 ```
 
 You can mix and match services across **application**, **infrastructure**, **persistence**, and **utility** layers.
@@ -60,7 +60,7 @@ Volumes are used to mount your local code into containers for live development a
 
 ```yaml
 volumes:
-  - ${PWD}/app:/usr/src/app:Z
+  - ${PWD}/app:/var/www/html:Z
 ```
 
 Make sure the `WORKDIR` in the Dockerfile matches the mount point.
@@ -90,7 +90,7 @@ You can adjust these ports in `.env` as needed. Changes to environment variables
 ### 6. Customize for your project
 
 - Add new services, override existing ones, or modify Dockerfiles in the `docker/` directory.
-- Use the examples as templates for common architectures like **Laravel MVC**, **decoupled frontend/backend**, or **microservices**.
+- Use the examples as templates for common architectures like **MVC**, **decoupled frontend/backend**, or **microservices**.
 - Mount additional volumes if needed for configuration or static assets.
 
 ## License

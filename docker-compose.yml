@@ -27,9 +27,9 @@ include:
     - ./docker/utility/docker-compose.adminer.yml
     # - ./docker/utility/docker-compose.mailpit.yml
 
-    # - ./example/docker-compose.laravel.yml
     # - ./example/docker-compose.decoupled.yml
     # - ./example/docker-compose.microservices.yml
+    # - ./example/docker-compose.mvc.yml
 
 # Project-specific services and overrides can be defined here if needed.
 # services:
